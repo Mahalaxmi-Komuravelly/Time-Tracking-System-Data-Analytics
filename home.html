@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeTrack AI - Activity Logger</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="home.html" class="nav-logo">
+                <span class="logo-icon">⏱️</span>
+                <span>TimeTrack AI</span>
+            </a>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link active">Logger</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+            </div>
+            <div class="nav-user">
+                <span id="user-name" class="user-name"></span>
+                <button id="logout-btn" class="btn btn-outline btn-sm">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Date Selection -->
+            <section class="date-section">
+                <h1 class="page-title">Activity Logger</h1>
+                <div class="date-picker-wrapper">
+                    <label for="activity-date">Select Date:</label>
+                    <input type="date" id="activity-date" class="date-picker">
+                </div>
+            </section>
+
+            <!-- Time Budget Card -->
+            <section class="time-budget-card">
+                <div class="budget-header">
+                    <h3>⏳ Daily Time Budget</h3>
+                    <span id="selected-date-display" class="date-display"></span>
+                </div>
+                <div class="budget-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="total-minutes">0</span>
+                        <span class="stat-label">Minutes Logged</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="remaining-minutes">1440</span>
+                        <span class="stat-label">Minutes Remaining</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="activity-count">0</span>
+                        <span class="stat-label">Activities</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <p class="budget-message" id="budget-message">You have 1440 minutes left for this day</p>
+            </section>
+
+            <div class="content-grid">
+                <!-- Add Activity Form -->
+                <section class="form-section">
+                    <div class="card">
+                        <h2 class="card-title">➕ Add Activity</h2>
+                        <form id="activity-form">
+                            <div class="form-group">
+                                <label for="activity-name">Activity Name</label>
+                                <input type="text" id="activity-name" placeholder="e.g., Morning workout" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="activity-category">Category</label>
+                                <select id="activity-category" required>
+                                    <option value="">Select category</option>
+                                    <option value="Work">💼 Work</option>
+                                    <option value="Study">📚 Study</option>
+                                    <option value="Sleep">😴 Sleep</option>
+                                    <option value="Exercise">🏃 Exercise</option>
+                                    <option value="Entertainment">🎮 Entertainment</option>
+                                    <option value="Meal">🍽️ Meal</option>
+                                    <option value="Travel">🚗 Travel</option>
+                                    <option value="Self-care">🧘 Self-care</option>
+                                    <option value="Social">👥 Social</option>
+                                    <option value="Other">📌 Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="activity-minutes">Duration (minutes)</label>
+                                <input type="number" id="activity-minutes" min="1" max="1440" placeholder="e.g., 60" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full" id="submit-btn">Add Activity</button>
+                        </form>
+                    </div>
+
+                    <button id="analyse-btn" class="btn btn-accent btn-full analyse-btn" disabled>
+                        📊 Analyse This Day
+                    </button>
+                </section>
+
+                <!-- Activity List -->
+                <section class="activities-section">
+                    <div class="card">
+                        <h2 class="card-title">📋 Today's Activities</h2>
+                        <div id="activities-list" class="activities-list">
+                            <div class="empty-state" id="empty-state">
+                                <span class="empty-icon">📝</span>
+                                <p>No activities logged yet</p>
+                                <span class="empty-hint">Add your first activity to get started!</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>✏️ Edit Activity</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <form id="edit-form">
+                <input type="hidden" id="edit-activity-id">
+                <div class="form-group">
+                    <label for="edit-name">Activity Name</label>
+                    <input type="text" id="edit-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-category">Category</label>
+                    <select id="edit-category" required>
+                        <option value="Work">💼 Work</option>
+                        <option value="Study">📚 Study</option>
+                        <option value="Sleep">😴 Sleep</option>
+                        <option value="Exercise">🏃 Exercise</option>
+                        <option value="Entertainment">🎮 Entertainment</option>
+                        <option value="Meal">🍽️ Meal</option>
+                        <option value="Travel">🚗 Travel</option>
+                        <option value="Self-care">🧘 Self-care</option>
+                        <option value="Social">👥 Social</option>
+                        <option value="Other">📌 Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-minutes">Duration (minutes)</label>
+                    <input type="number" id="edit-minutes" min="1" max="1440" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" id="cancel-edit">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="scripts/activity.js"></script>
+</body>
+</html>

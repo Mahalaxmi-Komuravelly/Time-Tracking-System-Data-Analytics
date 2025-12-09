@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeTrack AI - Analytics Dashboard</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="home.html" class="nav-logo">
+                <span class="logo-icon">⏱️</span>
+                <span>TimeTrack AI</span>
+            </a>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">Logger</a>
+                <a href="dashboard.html" class="nav-link active">Dashboard</a>
+            </div>
+            <div class="nav-user">
+                <span id="user-name" class="user-name"></span>
+                <button id="logout-btn" class="btn btn-outline btn-sm">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Header -->
+            <section class="dashboard-header">
+                <div class="header-content">
+                    <h1 class="page-title">📊 Analytics Dashboard</h1>
+                    <p class="page-subtitle">Visualize your time allocation and productivity patterns</p>
+                </div>
+                <div class="date-picker-wrapper">
+                    <label for="dashboard-date">Select Date:</label>
+                    <input type="date" id="dashboard-date" class="date-picker">
+                </div>
+            </section>
+
+            <!-- Dashboard Content -->
+            <div id="dashboard-content">
+                <!-- Will be populated by JavaScript -->
+            </div>
+
+            <!-- No Data State -->
+            <div id="no-data-state" class="no-data-state hidden">
+                <div class="no-data-card">
+                    <span class="no-data-icon">📭</span>
+                    <h2>No Data Available</h2>
+                    <p>No activities found for this date</p>
+                    <span class="no-data-hint">Start logging your day to view insights and analytics!</span>
+                    <a href="home.html" class="btn btn-primary">
+                        ➕ Start Logging Activities
+                    </a>
+                </div>
+            </div>
+
+            <!-- Data Dashboard -->
+            <div id="data-dashboard" class="hidden">
+                <!-- Summary Stats -->
+                <section class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-total-time">0h 0m</span>
+                            <span class="stat-label">Total Time Logged</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📋</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-activities">0</span>
+                            <span class="stat-label">Activities</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🏆</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-top-category">-</span>
+                            <span class="stat-label">Top Category</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-productivity">0%</span>
+                            <span class="stat-label">Day Tracked</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Charts Grid -->
+                <section class="charts-grid">
+                    <div class="chart-card">
+                        <h3 class="chart-title">🥧 Time by Category</h3>
+                        <div class="chart-container">
+                            <canvas id="pie-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3 class="chart-title">📊 Activity Duration</h3>
+                        <div class="chart-container">
+                            <canvas id="bar-chart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Category Breakdown -->
+                <section class="breakdown-section">
+                    <div class="card">
+                        <h3 class="card-title">📂 Category Breakdown</h3>
+                        <div id="category-breakdown" class="category-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Timeline -->
+                <section class="timeline-section">
+                    <div class="card">
+                        <h3 class="card-title">📅 Activity Timeline</h3>
+                        <div id="activity-timeline" class="timeline">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="scripts/dashboard.js"></script>
+</body>
+</html>
